@@ -154,7 +154,7 @@ function displayYouWon() {
 
     //we need to check first if the boundries are not red
     var boundries_color = getBoundriesColor();
-    console.log(boundries_color);
+    //console.log(boundries_color);
     if (boundries_color!=="red"){
         var status = document.getElementById("status");
         status.innerHTML = "You Won &#128525";
