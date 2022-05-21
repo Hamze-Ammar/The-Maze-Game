@@ -212,8 +212,9 @@ function displayCheating(){
     //in order to do that we can simply check if the title.color (status) is not red or blue
 
     //get the h2 element
-    var status_color = document.getElementById("status").style.color;
+    var status = document.getElementById("status");
+    var status_color = status.style.color;
     if (status_color!="blue" && status_color!="red"){
-        status_color.innerHTML = "Go ahead bro no one is watching &#128529";
+        status.innerHTML = "Go ahead bro no one is watching &#128529";
     }
 }
