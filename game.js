@@ -62,6 +62,7 @@ function resetBordersColor () {
     activateDangerZone();
     activateTheEnd();
     reset_title();
+    detectCheating();
 }
 
 
@@ -122,8 +123,7 @@ function decreaseScore() {
     }
 }
 
-//a function 
-to get the borders color 
+//a function to get the borders color 
 function getBoundriesColor() {
     //get the borders color
     const danger_zone = document.querySelectorAll(".boundary");
@@ -199,12 +199,16 @@ function detectCheating() {
 
     //get the p tags inside the body
     var p_tags = document.getElementsByTagName("p");
-    console.log(p_tags);
+    //console.log(p_tags);
+    for (let i=0 ; i < p_tags.length ; i++){
+        //console.log(p_tags[i]);
+        p_tags[i].addEventListener("mouseover", function(){displayCheating()});
+    }
 }
 
 //the function that will print a message when cheating
 function displayCheating(){
     //get the h2 element
     var status = document.getElementById("status");
-    status.innerHTML = "Do not cheat bro &#128529";
+    status.innerHTML = "Go ahead bro no one is watching &#128529";
 }
