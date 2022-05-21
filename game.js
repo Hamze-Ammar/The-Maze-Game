@@ -208,7 +208,12 @@ function detectCheating() {
 
 //the function that will print a message when cheating
 function displayCheating(){
+    //First we need to check if the user has not already won or lost
+    //in order to do that we can simply check if the title.color (status) is not red or blue
+
     //get the h2 element
-    var status = document.getElementById("status");
-    status.innerHTML = "Go ahead bro no one is watching &#128529";
+    var status_color = document.getElementById("status").style.color;
+    if (status_color!="blue" && status_color!="red"){
+        status_color.innerHTML = "Go ahead bro no one is watching &#128529";
+    }
 }
