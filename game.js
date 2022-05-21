@@ -122,6 +122,8 @@ function decreaseScore() {
     }
 }
 
+//a function 
+to get the borders color 
 function getBoundriesColor() {
     //get the borders color
     const danger_zone = document.querySelectorAll(".boundary");
@@ -185,3 +187,18 @@ function removeEventListenerOnBoundries() {
         zone.removeEventListener("mouseover", function(){fireOnTheHall()});
     });
 }           
+
+//This function will detect if the user trie to cheat :P
+//cheating means the user is trying to get to the end from outside the maze
+function detectCheating() {
+    //we simply could add event listener on the h2 element on top 
+    //And the the p tag on bottom
+    //get the h2 element
+    var status = document.getElementById("status");
+    status.addEventListener("mouseover", function(){displayCheating()});
+
+    //get the p tags inside the body
+    var p_tags = document.getElementsByTagName("p");
+    console.log(p_tags);
+}
+
