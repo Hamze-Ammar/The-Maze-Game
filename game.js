@@ -202,3 +202,9 @@ function detectCheating() {
     console.log(p_tags);
 }
 
+//the function that will print a message when cheating
+function displayCheating(){
+    //get the h2 element
+    var status = document.getElementById("status");
+    status.innerHTML = "Do not cheat bro &#128529";
+}
