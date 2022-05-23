@@ -1,6 +1,18 @@
 let user_score = 0;
 let game_started = false;
 
+//stop watch variables:
+//let [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+//let timerRef = document.querySelector('.timerDisplay');
+let int = null;
+let count = 0;
+let low_score = -Infinity;
+let high_score = Infinity;
+var startTime = Date.now();
+let interval;
+let elapsedTime;
+const user_score_time = [];
+
 document.addEventListener("DOMContentLoaded", function(){
     startGame();
     //testing();
@@ -52,6 +64,10 @@ function displayScore(input) {
 
 //One hover reset the border colors
 function resetBordersColor () {
+    //elapsedTime = 0;
+    clearInterval(interval);
+    resetLiveTime();
+
     //write the function here
     //get the elements, mainly the five divs
     const danger_zone = document.querySelectorAll(".boundary");
@@ -140,6 +156,11 @@ function activateTheEnd(){
 }
 
 function displayYouLost(){
+    displayResultTiming();
+    clearInterval(interval);
+    resetLiveTime();
+
+
     //get the h2 element
     var status = document.getElementById("status");
     status.innerHTML = "You Lost &#128556";
@@ -147,6 +168,10 @@ function displayYouLost(){
 }
 
 function displayYouWon() {
+    displayResultTiming();
+    clearInterval(interval);
+    resetLiveTime();
+    
     //increase score
     new_score = increaseScore();
     displayScore(new_score);
@@ -218,8 +243,9 @@ function displayCheating(){
 }
 
 function displayTiming(){
-    console.log("hi");
+    //console.log("hi");
     addHtmlTags();
+    setStopWatch();
 }
 
 function addHtmlTags(){
@@ -229,7 +255,7 @@ function addHtmlTags(){
         let score_div = document.getElementsByTagName("p")[1];
         //console.log(score_div);
 
-        score_div.innerHTML = "<span id='timer'>Timer: </span><span id='lower'>lower</span><span id='higher'>higher</span>"
+        score_div.innerHTML = "<span id='timer'>Timer: </span><span id='worst'>lower</span><span id='best'>higher</span>"
 
         let spans = document.getElementsByTagName('span');
         //spans.style.textAlign = 'center';
@@ -238,9 +264,46 @@ function addHtmlTags(){
             spans[i].style.marginLeft = '40px';
             spans[i].style.marginRight = '40px';
         }
-
         game_started = true;
     }
 }
 
 
+function setStopWatch() {
+    interval = setInterval(function() {
+        elapsedTime = Date.now() - startTime;
+        var live_time = document.getElementById('timer');
+        elapsedTime = (elapsedTime /1000).toFixed(2);
+        live_time.innerHTML = "live <br>" + elapsedTime;
+    }, 100);
+    user_score_time.push(elapsedTime);
+}
+
+function displayResultTiming(){
+    //get elements
+    let worst_time_taken = document.getElementById('worst');
+    let best_time_taken = document.getElementById('best');
+
+    if (low_score<elapsedTime) {
+        low_score = elapsedTime;
+        worst_time_taken.innerHTML = "worst <br>" + low_score;
+    }
+    else{
+        worst_time_taken.innerHTML = "worst <br>" + low_score;
+    }
+    if (high_score>elapsedTime) {
+        best_time_taken = elapsedTime;
+        best_time_taken.innerHTML = "best <br>" + best_time_taken;
+    }
+    else {
+        best_time_taken.innerHTML = "best <br>" + best_time_taken;
+    }
+}
+
+
+function resetLiveTime() {
+    clearInterval(interval);
+    interval = 0;
+    elapsedTime = 0;
+
+}
