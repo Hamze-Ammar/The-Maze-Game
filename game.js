@@ -1,7 +1,9 @@
 let user_score = 0;
+let game_started = false;
 
 document.addEventListener("DOMContentLoaded", function(){
     startGame();
+    //testing();
 });
 
 
@@ -59,12 +61,12 @@ function resetBordersColor () {
     });
 
     //since the game hs started we need to do the following:
+    displayTiming();
     activateDangerZone();
     activateTheEnd();
     reset_title();
     detectCheating();
 }
-
 
 function reset_title(){
     //get the h2 element
@@ -72,8 +74,6 @@ function reset_title(){
     status.innerHTML = 'Begin by moving your mouse over the "S".';
     status.style.color = "black";
 }
-
-
 
 //add event listeners function
 function activateDangerZone () {
@@ -146,7 +146,6 @@ function displayYouLost(){
     status.style.color = "red";
 }
 
-
 function displayYouWon() {
     //increase score
     new_score = increaseScore();
@@ -164,7 +163,6 @@ function displayYouWon() {
 
     removeEventListenerOnBoundries();
 }
-
 
 function increaseScore(){
     //check if the h2 is not blue! to prevent further increase in the score
@@ -218,3 +216,31 @@ function displayCheating(){
         status.innerHTML = "Go ahead bro no one is watching &#128529";
     }
 }
+
+function displayTiming(){
+    console.log("hi");
+    addHtmlTags();
+}
+
+function addHtmlTags(){
+    if (!game_started) {
+        //console.log("hi");
+
+        let score_div = document.getElementsByTagName("p")[1];
+        //console.log(score_div);
+
+        score_div.innerHTML = "<span id='timer'>Timer: </span><span id='lower'>lower</span><span id='higher'>higher</span>"
+
+        let spans = document.getElementsByTagName('span');
+        //spans.style.textAlign = 'center';
+        for (let i=0 ; i<spans.length ; i++ ){
+            spans[i].style.display = "inline-block";
+            spans[i].style.marginLeft = '40px';
+            spans[i].style.marginRight = '40px';
+        }
+
+        game_started = true;
+    }
+}
+
+
