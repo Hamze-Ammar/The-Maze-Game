@@ -298,6 +298,8 @@ function displayResultTiming(){
     else {
         best_time_taken.innerHTML = "best <br>" + high_score;
     }
+
+    document.getElementById('timer').innerHTML = 0;
 }
 
 
@@ -305,5 +307,4 @@ function resetLiveTime() {
     clearInterval(interval);
     interval = 0;
     elapsedTime = 0;
-
 }
