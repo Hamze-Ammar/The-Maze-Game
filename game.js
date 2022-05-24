@@ -1,11 +1,10 @@
 let user_score = 0;
 let game_started = false;
-
+let live_time;
 
 
 document.addEventListener("DOMContentLoaded", function(){
     startGame();
-    //testing();
 });
 
 
@@ -29,6 +28,7 @@ function resetScore() {
 
     //The second part is to reset the display of the boundries (back to black)
     resetBordersColor();
+    resetTimingScores();
 }
 
 function displayScore(input) {
@@ -55,6 +55,7 @@ function displayScore(input) {
 //One hover reset the border colors
 function resetBordersColor () {
 
+    resetTimingScores();
 
     //write the function here
     //get the elements, mainly the five divs
@@ -72,7 +73,7 @@ function resetBordersColor () {
     addTimerHTML();
     startStopWatch();
 
-    clearInterval(interval); //Not sure 
+    //clearInterval(interval); //Not sure 
 }
 
 function reset_title(){
@@ -152,9 +153,8 @@ function activateTheEnd(){
 
 function displayYouLost(){
     displayResultTiming();
-    //displayResultTiming();
     clearInterval(interval);
-    //resetLiveTime();
+    resetTimingScores();
 
 
     //get the h2 element
@@ -164,9 +164,11 @@ function displayYouLost(){
 }
 
 function displayYouWon() {
-    displayResultTiming();
+    let won = true;
+    displayResultTiming(won);
     clearInterval(interval);
     // resetLiveTime();
+    resetTimingScores();
     
     //increase score
     new_score = increaseScore();
@@ -263,7 +265,6 @@ function addTimerHTML(){
 }
 
 
-
 let interval =null;
 let elapsedTime;
 const user_score_timer = [];
@@ -271,6 +272,7 @@ var startTime = Date.now();
 let high_score = Infinity;
 
 function startStopWatch() {
+    startTime = Date.now();
     interval = setInterval(function() {
         elapsedTime = Date.now() - startTime;
         var live_time = document.getElementById('timer');
@@ -278,12 +280,12 @@ function startStopWatch() {
         live_time.innerHTML = "live <br>" + elapsedTime;
     }, 100);
     user_score_timer.push(elapsedTime);
-    console.log("hello");
-    console.log(elapsedTime);
-    console.log(user_score_timer);
+    // console.log("hello");
+    // console.log(elapsedTime);
+    // console.log(user_score_timer);
 }
 
-function displayResultTiming(){
+function displayResultTiming(won){
     //get elements
     let last_time_taken = document.getElementById('last');
     let best_time_taken = document.getElementById('best');
@@ -293,20 +295,30 @@ function displayResultTiming(){
     last_time_taken.innerHTML = "last <br>" + last_score;
 
 
-    if (high_score>elapsedTime) {
+    if (high_score>elapsedTime && won) {
         high_score = elapsedTime;
         best_time_taken.innerHTML = "best <br>" + high_score;
     }
     else {
-        best_time_taken.innerHTML = "best <br>" + high_score;
+        if (high_score){
+            best_time_taken.innerHTML = "best <br>" + high_score;
+        }
+        else {
+            best_time_taken.innerHTML = "best <br>" + "0.00";
+        }
     }
 
-    console.log("displayResultTiming");
-    console.log("last_score" + last_score);
-    console.log("high score" + high_score);
 
-    document.getElementById('timer').innerHTML = 0;
+}
+
+function resetTimingScores() {
+    live_time = document.getElementById('timer');
+    if (game_started) {
+        //console.log("hello hear me????");
+        live_time.innerText = "0.00";
+
+    }
     elapsedTime = 0;
     clearInterval(interval);
-
+    //console.log("hello");
 }
