@@ -71,6 +71,8 @@ function resetBordersColor () {
     detectCheating();
     addTimerHTML();
     startStopWatch();
+
+    clearInterval(interval); //Not sure 
 }
 
 function reset_title(){
@@ -149,8 +151,9 @@ function activateTheEnd(){
 }
 
 function displayYouLost(){
+    displayResultTiming();
     //displayResultTiming();
-    //clearInterval(interval);
+    clearInterval(interval);
     //resetLiveTime();
 
 
@@ -161,7 +164,7 @@ function displayYouLost(){
 }
 
 function displayYouWon() {
-    // displayResultTiming();
+    displayResultTiming();
     clearInterval(interval);
     // resetLiveTime();
     
@@ -259,10 +262,13 @@ function addTimerHTML(){
     startStopWatch();
 }
 
+
+
 let interval =null;
 let elapsedTime;
 const user_score_timer = [];
 var startTime = Date.now();
+let high_score = Infinity;
 
 function startStopWatch() {
     interval = setInterval(function() {
@@ -277,3 +283,30 @@ function startStopWatch() {
     console.log(user_score_timer);
 }
 
+function displayResultTiming(){
+    //get elements
+    let last_time_taken = document.getElementById('last');
+    let best_time_taken = document.getElementById('best');
+
+    //last score
+    let last_score = user_score_timer[user_score_timer.length-1];
+    last_time_taken.innerHTML = "last <br>" + last_score;
+
+
+    if (high_score>elapsedTime) {
+        high_score = elapsedTime;
+        best_time_taken.innerHTML = "best <br>" + high_score;
+    }
+    else {
+        best_time_taken.innerHTML = "best <br>" + high_score;
+    }
+
+    console.log("displayResultTiming");
+    console.log("last_score" + last_score);
+    console.log("high score" + high_score);
+
+    document.getElementById('timer').innerHTML = 0;
+    elapsedTime = 0;
+    clearInterval(interval);
+
+}
