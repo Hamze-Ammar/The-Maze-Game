@@ -70,6 +70,7 @@ function resetBordersColor () {
     reset_title();
     detectCheating();
     addTimerHTML();
+    startStopWatch();
 }
 
 function reset_title(){
@@ -157,7 +158,7 @@ function displayYouLost(){
 
 function displayYouWon() {
     // displayResultTiming();
-    // clearInterval(interval);
+    clearInterval(interval);
     // resetLiveTime();
     
     //increase score
@@ -250,5 +251,25 @@ function addTimerHTML(){
         }
         game_started = true;
     }
+    //clearInterval(interval);
+    startStopWatch();
+}
+
+let interval =null;
+let elapsedTime;
+const user_score_timer = [];
+var startTime = Date.now();
+
+function startStopWatch() {
+    interval = setInterval(function() {
+        elapsedTime = Date.now() - startTime;
+        var live_time = document.getElementById('timer');
+        elapsedTime = (elapsedTime /1000).toFixed(2);
+        live_time.innerHTML = "live <br>" + elapsedTime;
+    }, 100);
+    user_score_timer.push(elapsedTime);
+    console.log("hello");
+    console.log(elapsedTime);
+    console.log(user_score_timer);
 }
 
