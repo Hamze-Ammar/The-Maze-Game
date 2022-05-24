@@ -105,10 +105,14 @@ function fireOnTheHall() {
 
         //get the divs elements
         const danger_zone = document.querySelectorAll(".boundary");
+        danger_zone.forEach(div => {
+            //console.log(div);
+            div.style.borderColor = "red";
+        });
 
-        for (let i=0 ; i < danger_zone.length-1 ; i++) {
-            danger_zone[i].classList.add('youlose');
-        }
+        // for (let i=0 ; i < danger_zone.length-1 ; i++) {
+        //     danger_zone[i].classList.add('youlose');
+        // }
 
         //display you lost in the h2 element
         displayYouLost();
