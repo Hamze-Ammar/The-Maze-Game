@@ -1,17 +1,7 @@
 let user_score = 0;
 let game_started = false;
 
-//stop watch variables:
-//let [milliseconds,seconds,minutes,hours] = [0,0,0,0];
-//let timerRef = document.querySelector('.timerDisplay');
-let int = null;
-let count = 0;
-let low_score = -Infinity;
-let high_score = Infinity;
-var startTime = Date.now();
-let interval;
-let elapsedTime;
-const user_score_time = [];
+
 
 document.addEventListener("DOMContentLoaded", function(){
     startGame();
@@ -64,9 +54,7 @@ function displayScore(input) {
 
 //One hover reset the border colors
 function resetBordersColor () {
-    //elapsedTime = 0;
-    clearInterval(interval);
-    resetLiveTime();
+
 
     //write the function here
     //get the elements, mainly the five divs
@@ -77,11 +65,11 @@ function resetBordersColor () {
     });
 
     //since the game hs started we need to do the following:
-    displayTiming();
     activateDangerZone();
     activateTheEnd();
     reset_title();
     detectCheating();
+    addTimerHTML();
 }
 
 function reset_title(){
@@ -116,10 +104,10 @@ function fireOnTheHall() {
 
         //get the divs elements
         const danger_zone = document.querySelectorAll(".boundary");
-        danger_zone.forEach(div => {
-            //console.log(div);
-            div.style.borderColor = "red";
-        });
+
+        for (let i=0 ; i < danger_zone.length-1 ; i++) {
+            danger_zone[i].classList.add('youlose');
+        }
 
         //display you lost in the h2 element
         displayYouLost();
@@ -156,9 +144,9 @@ function activateTheEnd(){
 }
 
 function displayYouLost(){
-    displayResultTiming();
-    clearInterval(interval);
-    resetLiveTime();
+    //displayResultTiming();
+    //clearInterval(interval);
+    //resetLiveTime();
 
 
     //get the h2 element
@@ -168,9 +156,9 @@ function displayYouLost(){
 }
 
 function displayYouWon() {
-    displayResultTiming();
-    clearInterval(interval);
-    resetLiveTime();
+    // displayResultTiming();
+    // clearInterval(interval);
+    // resetLiveTime();
     
     //increase score
     new_score = increaseScore();
@@ -242,20 +230,16 @@ function displayCheating(){
     }
 }
 
-function displayTiming(){
-    //console.log("hi");
-    addHtmlTags();
-    setStopWatch();
-}
 
-function addHtmlTags(){
+//add html tag to show the timer
+function addTimerHTML(){
     if (!game_started) {
         //console.log("hi");
 
         let score_div = document.getElementsByTagName("p")[1];
         //console.log(score_div);
 
-        score_div.innerHTML = "<span id='timer'>Timer: </span><span id='worst'>lower</span><span id='best'>higher</span>"
+        score_div.innerHTML = "<span id='timer'>Timer: </span><span id='last'>last: </span><span id='best'>Best</span>"
 
         let spans = document.getElementsByTagName('span');
         //spans.style.textAlign = 'center';
@@ -268,43 +252,3 @@ function addHtmlTags(){
     }
 }
 
-
-function setStopWatch() {
-    interval = setInterval(function() {
-        elapsedTime = Date.now() - startTime;
-        var live_time = document.getElementById('timer');
-        elapsedTime = (elapsedTime /1000).toFixed(2);
-        live_time.innerHTML = "live <br>" + elapsedTime;
-    }, 100);
-    user_score_time.push(elapsedTime);
-}
-
-function displayResultTiming(){
-    //get elements
-    let worst_time_taken = document.getElementById('worst');
-    let best_time_taken = document.getElementById('best');
-
-    if (low_score<elapsedTime) {
-        low_score = elapsedTime;
-        worst_time_taken.innerHTML = "worst <br>" + low_score;
-    }
-    else{
-        worst_time_taken.innerHTML = "worst <br>" + low_score;
-    }
-    if (high_score>elapsedTime) {
-        high_score = elapsedTime;
-        best_time_taken.innerHTML = "best <br>" + high_score;
-    }
-    else {
-        best_time_taken.innerHTML = "best <br>" + high_score;
-    }
-
-    document.getElementById('timer').innerHTML = 0;
-}
-
-
-function resetLiveTime() {
-    clearInterval(interval);
-    interval = 0;
-    elapsedTime = 0;
-}
