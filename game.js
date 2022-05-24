@@ -164,8 +164,8 @@ function displayYouLost(){
 }
 
 function displayYouWon() {
-    let won = true;
-    displayResultTiming(won);
+    //let won = true;
+    displayResultTiming(won=true);
     clearInterval(interval);
     // resetLiveTime();
     resetTimingScores();
