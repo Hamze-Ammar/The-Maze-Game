@@ -292,11 +292,11 @@ function displayResultTiming(){
         worst_time_taken.innerHTML = "worst <br>" + low_score;
     }
     if (high_score>elapsedTime) {
-        best_time_taken = elapsedTime;
-        best_time_taken.innerHTML = "best <br>" + best_time_taken;
+        high_score = elapsedTime;
+        best_time_taken.innerHTML = "best <br>" + high_score;
     }
     else {
-        best_time_taken.innerHTML = "best <br>" + best_time_taken;
+        best_time_taken.innerHTML = "best <br>" + high_score;
     }
 }
 
